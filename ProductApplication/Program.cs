@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-var connection = @"Data Source=LAPTOP-8I6BV57D;Initial Catalog=ProductDb;Integrated Security=True;";
+string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
 //services.AddDbContext<app_DbContext>(options => options.UseSqlServer(connection));
 
