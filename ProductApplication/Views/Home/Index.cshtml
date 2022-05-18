@@ -1,0 +1,110 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Product APP</h1>
+</div>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <!--Import jQuery before export.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!--Data Table-->
+    <script type="text/javascript" src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src=" https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
+    <!--Export table button CSS-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/ProductDatatable.css" />
+
+    @*<style>
+
+        #demoGrid {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+            #demoGrid thead tr {
+                background-color: #009879;
+                color: #ffffff;
+                text-align: left;
+            }
+
+            #demoGrid th,
+            #demoGrid td {
+                padding: 12px 15px;
+            }
+
+            #demoGrid tbody tr {
+                border-bottom: 1px solid #dddddd;
+            }
+
+                #demoGrid tbody tr:nth-of-type(even) {
+                    background-color: #f3f3f3;
+                }
+
+                #demoGrid tbody tr:last-of-type {
+                    border-bottom: 2px solid #009879;
+                }
+
+    </style>*@
+
+    <script>
+
+        $(document).ready(function () {
+            LoadData();
+        });
+
+        function LoadData()
+        {
+            $.ajax({
+                url: "https://localhost:7294/Product/",
+                headers:{
+                    "Access-Control-Allow-Origin" : "*"
+                },
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function(data) {
+                    console.log(data);
+                     $.each(data, function(i, v) {
+                              $('#demoGrid').find('tbody')
+                             .append('<tr><td width="25%" class="ProductName">' + v.id + '</td><td width="25%" class="ProductDescription">' + v.productName + '</td><td width="25%" class="ProductDescription">' + v.productDescription + '</td><td width="25%" class="ProductDescription">' + v.price + '</td><td width="25%" class="ProductDescription">' + v.discount + '</td></tr>')
+                    });
+                    $("#demoGrid").DataTable();
+                },
+                error:function(e)
+                {
+                    alert(e);
+                    console.log(e);
+                },
+              });
+
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <br />
+        <div style="width:70%; margin:0 auto;">
+            <table id="demoGrid" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ProductID</th>
+                        <th>ProductName</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Discount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
